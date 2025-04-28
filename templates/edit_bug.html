@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Edit Bug{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold mb-4 text-center">Edit Bug #{{ bug.id }}</h2>
+    <form method="POST" action="{{ url_for('edit_bug', bug_id=bug.id) }}">
+        <div class="mb-4">
+            <label for="title" class="block text-gray-700">Bug Title</label>
+            <input type="text" id="title" name="title" class="w-full p-2 border rounded" value="{{ bug.title }}" required>
+        </div>
+        <div class="mb-4">
+            <label for="description" class="block text-gray-700">Description</label>
+            <textarea id="description" name="description" class="w-full p-2 border rounded" rows="4" required>{{ bug.description }}</textarea>
+        </div>
+        <div class="mb-4">
+            <label for="priority" class="block text-gray-700">Priority</label>
+            <select id="priority" name="priority" class="w-full p-2 border rounded" required>
+                <option value="低" {% if bug.priority == '低' %}selected{% endif %}>Low</option>
+                <option value="中" {% if bug.priority == '中' %}selected{% endif %}>Medium</option>
+                <option value="高" {% if bug.priority == '高' %}selected{% endif %}>High</option>
+                <option value="紧急" {% if bug.priority == '紧急' %}selected{% endif %}>Urgent</option>
+            </select>
+        </div>
+        <div class="mb-4">
+            <label for="expected_fix_date" class="block text-gray-700">Expected Fix Date</label>
+            <input type="date" id="expected_fix_date" name="expected_fix_date" class="w-full p-2 border rounded" value="{{ bug.expected_fix_date }}" required>
+        </div>
+        <div class="mb-4">
+            <label for="status" class="block text-gray-700">Status</label>
+            <select id="status" name="status" class="w-full p-2 border rounded" required>
+                <option value="待处理" {% if bug.status == '待处理' %}selected{% endif %}>Pending</option>
+                <option value="处理中" {% if bug.status == '处理中' %}selected{% endif %}>In Progress</option>
+                <option value="已解决" {% if bug.status == '已解决' %}selected{% endif %}>Resolved</option>
+                <option value="已关闭" {% if bug.status == '已关闭' %}selected{% endif %}>Closed</option>
+            </select>
+        </div>
+        <div class="mb-4">
+            <label for="assignee" class="block text-gray-700">Assignee</label>
+            <input type="text" id="assignee" name="assignee" class="w-full p-2 border rounded" value="{{ bug.assignee }}" required>
+        </div>
+        <div class="mb-4">
+            <label for="notes" class="block text-gray-700">Notes (Optional)</label>
+            <textarea id="notes" name="notes" class="w-full p-2 border rounded" rows="4">{{ bug.notes or '' }}</textarea>
+        </div>
+        <div class="flex space-x-4">
+            <button type="submit" class="flex-1 bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Save Changes</button>
+            <a href="{{ url_for('bug_list') }}" class="flex-1 bg-gray-600 text-white p-2 rounded text-center hover:bg-gray-700">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold mb-4 text-center">Dashboard</h2>
+    <div class="flex flex-col space-y-4">
+        <a href="{{ url_for('add_bug') }}" class="bg-blue-600 text-white p-2 rounded text-center hover:bg-blue-700">Add New Bug</a>
+        <a href="{{ url_for('bug_list') }}" class="bg-blue-600 text-white p-2 rounded text-center hover:bg-blue-700">View Bug List</a>
+        <a href="{{ url_for('statistics') }}" class="bg-blue-600 text-white p-2 rounded text-center hover:bg-blue-700">View Statistics</a>
+    </div>
+</div>
+{% endblock %}

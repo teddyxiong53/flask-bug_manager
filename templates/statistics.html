@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block title %}Statistics{% endblock %}
+{% block content %}
+<div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold mb-4 text-center">Bug Statistics</h2>
+
+    {% if no_data %}
+        <p class="text-center">No bug records available to generate statistics.</p>
+    {% else %}
+        <h3 class="text-xl font-semibold mb-2">By Priority</h3>
+        <table class="w-full border-collapse mb-6">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="p-2 border">Priority</th>
+                    <th class="p-2 border">Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in priority_counts %}
+                    <tr>
+                        <td class="p-2 border">{{ row.priority }}</td>
+                        <td class="p-2 border">{{ row.count }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h3 class="text-xl font-semibold mb-2">By Status</h3>
+        <table class="w-full border-collapse mb-6">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="p-2 border">Status</th>
+                    <th class="p-2 border">Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in status_counts %}
+                    <tr>
+                        <td class="p-2 border">{{ row.status }}</td>
+                        <td class="p-2 border">{{ row.count }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h3 class="text-xl font-semibold mb-2">By Assignee</h3>
+        <table class="w-full border-collapse mb-6">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="p-2 border">Assignee</th>
+                    <th class="p-2 border">Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in assignee_counts %}
+                    <tr>
+                        <td class="p-2 border">{{ row.assignee }}</td>
+                        <td class="p-2 border">{{ row.count }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h3 class="text-xl font-semibold mb-2">By Creator</h3>
+        <table class="w-full border-collapse mb-6">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="p-2 border">Creator</th>
+                    <th class="p-2 border">Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in creator_counts %}
+                    <tr>
+                        <td class="p-2 border">{{ row.created_by }}</td>
+                        <td class="p-2 border">{{ row.count }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h3 class="text-xl font-semibold mb-2">High Priority Bugs (Pending or In Progress)</h3>
+        {% if high_priority %}
+            <table class="w-full border-collapse">
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="p-2 border">ID</th>
+                        <th class="p-2 border">Title</th>
+                        <th class="p-2 border">Priority</th>
+                        <th class="p-2 border">Status</th>
+                        <th class="p-2 border">Assignee</th>
+                        <th class="p-2 border">Expected Fix Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for bug in high_priority %}
+                        <tr>
+                            <td class="p-2 border">{{ bug.id }}</td>
+                            <td class="p-2 border">{{ bug.title }}</td>
+                            <td class="p-2 border">{{ bug.priority }}</td>
+                            <td class="p-2 border">{{ bug.status }}</td>
+                            <td class="p-2 border">{{ bug.assignee }}</td>
+                            <td class="p-2 border">{{ bug.expected_fix_date }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="text-center">No high-priority bugs pending or in progress.</p>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock %}
